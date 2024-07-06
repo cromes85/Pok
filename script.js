@@ -5,15 +5,28 @@ const output = document.getElementById('output');
 const snapButton = document.getElementById('snap');
 const uploadInput = document.getElementById('upload');
 const outputText = document.getElementById('output-text');
+const cameraContainer = document.getElementById('camera-container');
 
-// Accéder à la caméra arrière du smartphone
-navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-    .then(stream => {
-        video.srcObject = stream;
-    })
-    .catch(err => {
-        console.error("Erreur d'accès à la caméra : ", err);
-    });
+// Fonction pour détecter si l'utilisateur est sur mobile
+function isMobileDevice() {
+    return /Mobi|Android/i.test(navigator.userAgent);
+}
+
+// Initialisation en fonction de l'appareil
+if (isMobileDevice()) {
+    // Accéder à la caméra arrière du smartphone
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        .then(stream => {
+            video.srcObject = stream;
+        })
+        .catch(err => {
+            console.error("Erreur d'accès à la caméra : ", err);
+            cameraContainer.style.display = 'none'; // Masquer l'option caméra si erreur
+        });
+} else {
+    // Masquer les options de la caméra si l'utilisateur est sur un PC
+    cameraContainer.style.display = 'none';
+}
 
 // Capturer la photo
 snapButton.addEventListener('click', () => {

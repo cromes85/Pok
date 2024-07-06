@@ -7,8 +7,10 @@
 </head>
 <body>
     <h1>Scanner de Carte Pokémon</h1>
-    <video id="video" width="320" height="240" autoplay></video>
-    <button id="snap">Prendre une photo</button>
+    <div id="camera-container">
+        <video id="video" width="320" height="240" autoplay></video>
+        <button id="snap">Prendre une photo</button>
+    </div>
     <input type="file" id="upload" accept="image/*">
     <canvas id="canvas" width="320" height="240" style="display: none;"></canvas>
     <img id="output" width="320" height="240"/>
