@@ -3,6 +3,7 @@ const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 const output = document.getElementById('output');
 const snapButton = document.getElementById('snap');
+const uploadInput = document.getElementById('upload');
 const outputText = document.getElementById('output-text');
 
 // Accéder à la caméra arrière du smartphone
@@ -22,6 +23,29 @@ snapButton.addEventListener('click', () => {
 
     // Analyser l'image (appel de la fonction pour extraire les informations)
     analyseImage(dataUrl);
+});
+
+// Charger une image depuis l'ordinateur
+uploadInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    
+    reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            context.drawImage(img, 0, 0, canvas.width, canvas.height);
+            const dataUrl = canvas.toDataURL('image/png');
+            output.src = dataUrl;
+
+            // Analyser l'image (appel de la fonction pour extraire les informations)
+            analyseImage(dataUrl);
+        };
+        img.src = e.target.result;
+    };
+    
+    reader.readAsDataURL(file);
 });
 
 function analyseImage(imageDataUrl) {
