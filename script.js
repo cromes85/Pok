@@ -4,8 +4,8 @@ const context = canvas.getContext('2d');
 const output = document.getElementById('output');
 const snapButton = document.getElementById('snap');
 
-// Accéder à la caméra du smartphone
-navigator.mediaDevices.getUserMedia({ video: true })
+// Accéder à la caméra arrière du smartphone
+navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
     .then(stream => {
         video.srcObject = stream;
     })
